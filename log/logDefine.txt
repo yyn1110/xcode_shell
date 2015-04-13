@@ -1,0 +1,27 @@
+#define LOG_LEVEL_OFF   0
+#define LOG_LEVEL_ERROR 20
+#define LOG_LEVEL_WARN  30
+#define LOG_LEVEL_INFO  80
+#define LOG_LEVEL_DEBUG 99
+
+//-------LOG--------------
+//日志调试开关
+
+#ifdef LOGDEBUG
+#define LOG_LEVEL    LOG_LEVEL_DEBUG
+#else
+#define LOG_LEVEL    LOG_LEVEL_OFF
+#endif
+#define DLogError(fmt, ...) do { if (LOG_LEVEL >= LOG_LEVEL_ERROR ) { MYNSLog(fmt, "KX_ERR", ##__VA_ARGS__);} } while(0);
+
+#define DLogWarn(fmt, ...) do { if (LOG_LEVEL >= LOG_LEVEL_WARN ) { MYNSLog(fmt, "KX_WARN", ##__VA_ARGS__); } } while(0);
+
+#define DLogInfo(fmt, ...) do { if (LOG_LEVEL >= LOG_LEVEL_INFO ) { MYNSLog(fmt, "KX_INFO", ##__VA_ARGS__); } } while(0);
+
+#define DLogDebug(fmt, ...) do { if (LOG_LEVEL >= LOG_LEVEL_DEBUG ) { MYNSLog(fmt, "KX_DEBUG", ##__VA_ARGS__); } } while(0);
+
+#define MYNSLog(fmt, LEVEL_NAME, ...) do { NSLog(@"%s - %s:%d " fmt, LEVEL_NAME, __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__); } while(0);
+
+#if (LOG_LEVEL == LOG_LEVEL_OFF)
+#define NSLog(fmt, ...) {}
+#endif
